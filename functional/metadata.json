@@ -1,5 +1,6 @@
 {
-    "itemDisplayName": "<your template name>",
-    "description": "<description of the template>"
-}
+    "itemDisplayName": "Harman Functional Test Environment",
+    "description": "This template creates an VNET, woth 3 subnets along with NGINX and Postgres",
+    "summary": "Deploys an Harman's Functional QA environment in a DevTest Lab."
+  }
   

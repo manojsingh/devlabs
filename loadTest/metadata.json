@@ -1,0 +1,6 @@
+{
+    "itemDisplayName": "Harman Load Test Environment",
+    "description": "This template creates an VNET, woth 3 subnets along with LoadBalancer, NGINX and Postgres",
+    "githubUsername": "Microsoft",
+    "summary": "Deploys an Harman's QA environment in a DevTest Lab."
+  }
