@@ -127,7 +127,7 @@
                         }
                     },
                     {
-                        "name": "[parameters('db_subnet_name')]",
+                        "name": "[parameters('dbsubnet_name')]",
                         "properties": {
                             "addressPrefix": "[parameters('dbsubnet_addressPrefixes')]",
                             "serviceEndpoints": [
