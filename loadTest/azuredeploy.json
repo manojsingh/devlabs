@@ -1,160 +1,307 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "type": "string"
-        },
-        "virtualNetworkName": {
-            "type": "string"
-        },
-        "resourceGroup": {
-            "type": "string"
-        },
-        "addressSpaces": {
-            "type": "array"
-        },
-        "ipv6Enabled": {
-            "type": "bool"
-        },
-        "subnetCount": {
-            "type": "int"
-        },
-        "subnet0_name": {
-            "type": "string"
-        },
-        "subnet0_addressRange": {
-            "type": "string"
-        },
-        "subnet0_serviceEndpoints": {
-            "type": "array"
-        },
-        "subnet1_name": {
-            "type": "string"
-        },
-        "subnet1_addressRange": {
-            "type": "string"
-        },
-        "subnet1_serviceEndpoints": {
-            "type": "array"
-        },
-        "subnet2_name": {
-            "type": "string"
-        },
-        "subnet2_addressRange": {
-            "type": "string"
-        },
-        "subnet2_serviceEndpoints": {
-            "type": "array"
-        },
-        "ddosProtectionPlanEnabled": {
-            "type": "bool"
-        },
-        "firewallEnabled": {
-            "type": "bool"
-        },
-        "bastionEnabled": {
-            "type": "bool"
+        "virtualNetworks_test_vnet_name": {
+            "defaultValue": "test-vnet",
+            "type": "String"
         }
     },
     "variables": {},
     "resources": [
         {
-            "name": "[parameters('virtualNetworkName')]",
-            "type": "Microsoft.Network/VirtualNetworks",
-            "apiVersion": "2019-09-01",
-            "location": "[parameters('location')]",
-            "dependsOn": [],
-            "tags": {
-                "testTag": "testtag value"
-            },
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2020-03-01",
+            "name": "[parameters('virtualNetworks_test_vnet_name')]",
+            "location": "eastus",
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "10.3.0.0/16"
+                        "10.4.0.0/16"
                     ]
                 },
                 "subnets": [
                     {
                         "name": "FE",
                         "properties": {
-                            "addressPrefix": "10.3.1.0/24",
+                            "addressPrefix": "10.4.0.0/24",
                             "serviceEndpoints": [
                                 {
-                                    "service": "Microsoft.AzureActiveDirectory"
+                                    "service": "Microsoft.Web",
+                                    "locations": [
+                                        "*"
+                                    ]
                                 },
                                 {
-                                    "service": "Microsoft.AzureCosmosDB"
+                                    "service": "Microsoft.Sql",
+                                    "locations": [
+                                        "eastus"
+                                    ]
                                 },
                                 {
-                                    "service": "Microsoft.KeyVault"
+                                    "service": "Microsoft.AzureActiveDirectory",
+                                    "locations": [
+                                        "*"
+                                    ]
                                 },
                                 {
-                                    "service": "Microsoft.Sql"
-                                },
-                                {
-                                    "service": "Microsoft.Storage"
-                                },
-                                {
-                                    "service": "Microsoft.Web"
+                                    "service": "Microsoft.KeyVault",
+                                    "locations": [
+                                        "*"
+                                    ]
                                 }
-                            ]
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
                         }
                     },
                     {
-                        "name": "APP",
+                        "name": "BE",
                         "properties": {
-                            "addressPrefix": "10.3.2.0/24",
+                            "addressPrefix": "10.4.1.0/24",
                             "serviceEndpoints": [
                                 {
-                                    "service": "Microsoft.AzureActiveDirectory"
+                                    "service": "Microsoft.AzureActiveDirectory",
+                                    "locations": [
+                                        "*"
+                                    ]
                                 },
                                 {
-                                    "service": "Microsoft.KeyVault"
+                                    "service": "Microsoft.KeyVault",
+                                    "locations": [
+                                        "*"
+                                    ]
                                 },
                                 {
-                                    "service": "Microsoft.Sql"
+                                    "service": "Microsoft.Sql",
+                                    "locations": [
+                                        "eastus"
+                                    ]
                                 },
                                 {
-                                    "service": "Microsoft.Storage"
+                                    "service": "Microsoft.Storage",
+                                    "locations": [
+                                        "eastus",
+                                        "westus"
+                                    ]
                                 },
                                 {
-                                    "service": "Microsoft.Web"
-                                },
-                                {
-                                    "service": "Microsoft.AzureCosmosDB"
+                                    "service": "Microsoft.Web",
+                                    "locations": [
+                                        "*"
+                                    ]
                                 }
-                            ]
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
                         }
                     },
                     {
                         "name": "DB",
                         "properties": {
-                            "addressPrefix": "10.3.3.0/24",
+                            "addressPrefix": "10.4.2.0/24",
                             "serviceEndpoints": [
                                 {
-                                    "service": "Microsoft.AzureActiveDirectory"
+                                    "service": "Microsoft.AzureActiveDirectory",
+                                    "locations": [
+                                        "*"
+                                    ]
                                 },
                                 {
-                                    "service": "Microsoft.AzureCosmosDB"
+                                    "service": "Microsoft.AzureCosmosDB",
+                                    "locations": [
+                                        "*"
+                                    ]
                                 },
                                 {
-                                    "service": "Microsoft.KeyVault"
+                                    "service": "Microsoft.KeyVault",
+                                    "locations": [
+                                        "*"
+                                    ]
                                 },
                                 {
-                                    "service": "Microsoft.Sql"
+                                    "service": "Microsoft.ServiceBus",
+                                    "locations": [
+                                        "*"
+                                    ]
                                 },
                                 {
-                                    "service": "Microsoft.Storage"
+                                    "service": "Microsoft.Sql",
+                                    "locations": [
+                                        "eastus"
+                                    ]
                                 },
                                 {
-                                    "service": "Microsoft.Web"
+                                    "service": "Microsoft.Storage",
+                                    "locations": [
+                                        "eastus",
+                                        "westus"
+                                    ]
+                                },
+                                {
+                                    "service": "Microsoft.Web",
+                                    "locations": [
+                                        "*"
+                                    ]
                                 }
-                            ]
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
                         }
                     }
                 ],
-                "enableDdosProtection": "[parameters('ddosProtectionPlanEnabled')]"
+                "virtualNetworkPeerings": [],
+                "enableDdosProtection": false,
+                "enableVmProtection": false
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2020-03-01",
+            "name": "[concat(parameters('virtualNetworks_test_vnet_name'), '/BE')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_test_vnet_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.4.1.0/24",
+                "serviceEndpoints": [
+                    {
+                        "service": "Microsoft.AzureActiveDirectory",
+                        "locations": [
+                            "*"
+                        ]
+                    },
+                    {
+                        "service": "Microsoft.KeyVault",
+                        "locations": [
+                            "*"
+                        ]
+                    },
+                    {
+                        "service": "Microsoft.Sql",
+                        "locations": [
+                            "eastus"
+                        ]
+                    },
+                    {
+                        "service": "Microsoft.Storage",
+                        "locations": [
+                            "eastus",
+                            "westus"
+                        ]
+                    },
+                    {
+                        "service": "Microsoft.Web",
+                        "locations": [
+                            "*"
+                        ]
+                    }
+                ],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2020-03-01",
+            "name": "[concat(parameters('virtualNetworks_test_vnet_name'), '/DB')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_test_vnet_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.4.2.0/24",
+                "serviceEndpoints": [
+                    {
+                        "service": "Microsoft.AzureActiveDirectory",
+                        "locations": [
+                            "*"
+                        ]
+                    },
+                    {
+                        "service": "Microsoft.AzureCosmosDB",
+                        "locations": [
+                            "*"
+                        ]
+                    },
+                    {
+                        "service": "Microsoft.KeyVault",
+                        "locations": [
+                            "*"
+                        ]
+                    },
+                    {
+                        "service": "Microsoft.ServiceBus",
+                        "locations": [
+                            "*"
+                        ]
+                    },
+                    {
+                        "service": "Microsoft.Sql",
+                        "locations": [
+                            "eastus"
+                        ]
+                    },
+                    {
+                        "service": "Microsoft.Storage",
+                        "locations": [
+                            "eastus",
+                            "westus"
+                        ]
+                    },
+                    {
+                        "service": "Microsoft.Web",
+                        "locations": [
+                            "*"
+                        ]
+                    }
+                ],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2020-03-01",
+            "name": "[concat(parameters('virtualNetworks_test_vnet_name'), '/FE')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_test_vnet_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.4.0.0/24",
+                "serviceEndpoints": [
+                    {
+                        "service": "Microsoft.Web",
+                        "locations": [
+                            "*"
+                        ]
+                    },
+                    {
+                        "service": "Microsoft.Sql",
+                        "locations": [
+                            "eastus"
+                        ]
+                    },
+                    {
+                        "service": "Microsoft.AzureActiveDirectory",
+                        "locations": [
+                            "*"
+                        ]
+                    },
+                    {
+                        "service": "Microsoft.KeyVault",
+                        "locations": [
+                            "*"
+                        ]
+                    }
+                ],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
             }
         }
     ]
