@@ -27,15 +27,7 @@
             "type": "String"
         }
     },
-    "variables": {
-		"DTLEnvironStoreName": "[toLower([concat(parameters('DTLEnvironVmName'), 'storename')])]",
-		"DTLEnvironVmImagePublisher": "MicrosoftWindowsServer",
-		"DTLEnvironVmImageOffer": "WindowsServer",
-		"DTLEnvironVmOSDiskName": "[concat(parameters('DTLEnvironVmName'), 'OSDisk')]",
-		"DTLEnvironVmSize": "Standard_D2_v2",
-		"DTLEnvironVmStorageAccountContainerName": "vhds",
-		"DTLEnvironVmNicName": "[concat(parameters('DTLEnvironVmName'), 'NetworkInterface')]"        
-    },
+    "variables": {},
     "resources": [
         {
             "type": "Microsoft.Network/virtualNetworks",
