@@ -25,6 +25,9 @@
         },
         "dbsubnet_addressPrefixes": {
             "type": "String"
+        },
+        "resourceTags": {
+            "type": "object"
         }
     },
     "variables": {},
