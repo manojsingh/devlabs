@@ -3,39 +3,39 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vnet_name": {
-            "defaultValue": "test-vnet",
             "type": "String"
         },
         "vnet_addressPrefixes": {
-            "defaultValue": "10.4.0.0/16",
             "type": "String"
         },
         "front_subnet_name": {
-            "defaultValue": "FE",
             "type": "String"
         },
         "fesubnet_addressPrefixes": {
-            "defaultValue": "10.4.0.0/24",
             "type": "String"
         },
         "backend_subnet_name": {
-            "defaultValue": "BE",
             "type": "String"
         },
         "besubnet_addressPrefixes": {
-            "defaultValue": "10.4.1.0/24",
             "type": "String"
         },
         "dbsubnet_name": {
-            "defaultValue": "DB",
             "type": "String"
         },
         "dbsubnet_addressPrefixes": {
-            "defaultValue": "10.4.2.0/24",
             "type": "String"
         }
     },
-    "variables": {},
+    "variables": {
+		"DTLEnvironStoreName": "[toLower([concat(parameters('DTLEnvironVmName'), 'storename')])]",
+		"DTLEnvironVmImagePublisher": "MicrosoftWindowsServer",
+		"DTLEnvironVmImageOffer": "WindowsServer",
+		"DTLEnvironVmOSDiskName": "[concat(parameters('DTLEnvironVmName'), 'OSDisk')]",
+		"DTLEnvironVmSize": "Standard_D2_v2",
+		"DTLEnvironVmStorageAccountContainerName": "vhds",
+		"DTLEnvironVmNicName": "[concat(parameters('DTLEnvironVmName'), 'NetworkInterface')]"        
+    },
     "resources": [
         {
             "type": "Microsoft.Network/virtualNetworks",
